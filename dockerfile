@@ -15,7 +15,7 @@ COPY script.sh script.sh
 RUN chmod +x script.sh
 
 # create appuser
-RUN useradd -r -u 1000 -g appuser appuser
+RUN useradd -r --uid 1000 --gid 1000 appuser
 USER appuser
 
 # run cron
