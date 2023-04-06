@@ -14,8 +14,8 @@ RUN chmod +x entrypoint.sh
 COPY script.sh script.sh
 RUN chmod +x script.sh
 
-# create appuser
-RUN useradd -r --uid 1000 --gid 1000 appuser
+# create appuser uid 1000 gid 1000
+RUN groupadd -r appuser && useradd -r -g appuser -u 1000 appuser
 USER appuser
 
 # run cron
