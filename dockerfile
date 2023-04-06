@@ -14,5 +14,9 @@ RUN chmod +x entrypoint.sh
 COPY script.sh script.sh
 RUN chmod +x script.sh
 
+# create appuser
+RUN useradd -r -u 1000 -g appuser appuser
+USER appuser
+
 # run cron
 ENTRYPOINT ["./entrypoint.sh"]
