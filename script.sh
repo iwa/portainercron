@@ -1,17 +1,17 @@
 #!/bin/bash
 echo "cron running"
-stacks=$(curl -s --request GET \
-  --url https://$PORTAINER_URL/api/stacks \
-  --header "X-api-key: $PORTAINER_API_KEY")
+stacks=$(curl -s --request GET --url https://$PORTAINER_URL/api/stacks --header "X-api-key: $PORTAINER_API_KEY")
+echo "get stacks"
+
 # Get all stack names
 ids=( $(echo "$stacks" | jq -r '.[] | .Id') )
 names=( $(echo "$stacks" | jq -r '.[] | .Name') )
 mkdir -p ./stacks
+echo "mkdir stacks"
 for index in "${!ids[@]}"; do
     echo "# ${names[$index]}" > ./stacks/"${names[$index]}".md
     echo "\`\`\`yaml" >> ./stacks/"${names[$index]}".md
-    curl -s --request GET \
-  --url https://$PORTAINER_URL/api/stacks/${ids[$index]}/file \
-  --header "x-api-key: $PORTAINER_API_KEY" | jq -r '.StackFileContent' >> ./stacks/"${names[$index]}".md
-  echo "\`\`\`" >> ./stacks/"${names[$index]}".md
+    curl -s --request GET --url https://$PORTAINER_URL/api/stacks/${ids[$index]}/file --header "x-api-key: $PORTAINER_API_KEY" | jq -r '.StackFileContent' >> ./stacks/"${names[$index]}".md
+    echo "\`\`\`" >> ./stacks/"${names[$index]}".md
 done
+echo "fini"
