@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "cron running"
 stacks=$(curl -s --request GET \
   --url https://$PORTAINER_URL/api/stacks \
   --header "X-api-key: $PORTAINER_API_KEY")
